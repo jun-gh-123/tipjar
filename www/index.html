@@ -9,6 +9,10 @@
 #tipToken {
   margin-top: 10px;
 }
+
+#submitTip {
+  margin-top: 10px;
+}
 </style>
   </head>
   <body>
@@ -18,11 +22,11 @@
       <div class="amount">
         <div id="tipAmounts"></div>
         <select id="tipToken">
-          <option>SUI</option>
-          <option>USDC (SUI)</option>
+          <option value="sui">SUI</option>
+          <option value="usdc">USDC (SUI)</option>
         </select>
       </div>
-      <button>Tip</button>
+      <button id="submitTip">Tip</button>
     </div>
     <script src="./app.js"></script>
   </body>
