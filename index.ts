@@ -31,6 +31,8 @@ function toggleTipUI() {
 }
 
 function addTipAmounts(amounts) {
+  let checked = true;
+
   for (let amt of amounts) {
     const id = `tip-${amt}`;
     let container = document.createElement("div");
@@ -38,12 +40,16 @@ function addTipAmounts(amounts) {
     let label = document.createElement("label");
     label.textContent = amt;
     label.htmlFor = id;
+    label.style.userSelect = "none";
 
     let input = document.createElement("input");
     input.type = "radio";
     input.name = "tipAmount";
     input.value = amt;
     input.id = id;
+    input.checked = checked;
+
+    checked = false;
 
     container.append(input);
     container.append(label);
@@ -54,6 +60,7 @@ function addTipAmounts(amounts) {
   // add custom field
   const customId = "tip-custom";
   let container = document.createElement("div");
+  container.id = "customTipContainer";
 
   let customInputField = document.createElement("input");
   customInputField.type = "number";
@@ -89,6 +96,7 @@ function toBaseUnits(amount: string, decimals: number): bigint {
   );
 }
 
+let sendingToken = false;
 async function sendToken(senderAddress, token, amountRaw) {
   const network = dAppKit.stores.$currentNetwork.get();
 
@@ -114,9 +122,20 @@ async function sendToken(senderAddress, token, amountRaw) {
     ],
   });
 
-  const result = await dAppKit.signAndExecuteTransaction({
-    transaction: tx,
-  });
+  sendingToken = true;
+
+  let result;
+  try {
+    result = await dAppKit.signAndExecuteTransaction({
+      transaction: tx,
+    });
+  } catch (e) {
+    sendingToken = false;
+    console.log(e);
+    return;
+  }
+
+  sendingToken = false;
 
   if (result.FailedTransaction) {
     throw new Error(
@@ -127,6 +146,11 @@ async function sendToken(senderAddress, token, amountRaw) {
 }
 
 function submitTip() {
+  if (sendingToken) {
+    console.log(sendingToken);
+    return;
+  }
+
   const connection = dAppKit.stores.$connection.get();
   const senderAddress = connection?.account?.address;
 
