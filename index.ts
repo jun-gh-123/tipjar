@@ -25,9 +25,10 @@ const submitTipButton = document.getElementById("submitTip");
 
 function toggleTipUI() {
   const connection = dAppKit.stores.$connection.get();
-  const connected =
+  const connected = connection && 
     connection.isConnected && connection.wallet && connection.account;
-  tipUI.hidden = !connected;
+
+  tipUI.style.display = connected ? "" : "none";
 }
 
 function addTipAmounts(amounts) {
