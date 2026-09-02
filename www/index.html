@@ -1,8 +1,29 @@
 <html>
   <head>
-    <body>
-      <h1>tipjar</h1>
-      <mysten-dapp-kit-connect-button></mysten-dapp-kit-connect-button>
-      <script src="./app.js"></script>
+    <title>Tip Jar</title>
+<style>
+#tipUI {
+  margin-top: 10px;
+}
+
+#tipToken {
+  margin-top: 10px;
+}
+</style>
+  </head>
+  <body>
+    <h1>tipjar</h1>
+    <mysten-dapp-kit-connect-button></mysten-dapp-kit-connect-button>
+    <div id="tipUI" hidden>
+      <div class="amount">
+        <div id="tipAmounts"></div>
+        <select id="tipToken">
+          <option>SUI</option>
+          <option>USDC (SUI)</option>
+        </select>
+      </div>
+      <button>Tip</button>
+    </div>
+    <script src="./app.js"></script>
   </body>
 </html>
