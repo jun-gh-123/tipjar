@@ -24,9 +24,19 @@
 
       #submitTip {
         margin-top: 20px;
-        background: #298DFF;
+        background: #298dff;
         align-self: center;
         border-radius: 20px;
+      }
+
+      #thankYouDialogContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #closeThankYouDialog {
+        margin-top: 20px;
       }
     </style>
   </head>
@@ -39,12 +49,19 @@
         <div id="tipAmounts"></div>
         <h3>Token</h3>
         <select id="tipToken">
-          <option value="sui">SUI</option>
           <option value="usdc">USDC (SUI)</option>
+          <option value="sui">SUI</option>
         </select>
       </div>
       <button id="submitTip">Tip</button>
     </div>
+    <dialog id="thankYouDialog">
+      <div id="thankYouDialogContent">
+        <h3>Thank you. You're the best.</h3>
+        <img src="./thanku.gif" />
+        <button id="closeThankYouDialog">Yes</button>
+      </div>
+    </dialog>
     <script src="./app.js"></script>
   </body>
 </html>

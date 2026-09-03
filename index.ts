@@ -22,11 +22,20 @@ const tipUI = document.getElementById("tipUI");
 const tipAmounts = document.getElementById("tipAmounts");
 const tipTokenSelect = document.getElementById("tipToken");
 const submitTipButton = document.getElementById("submitTip");
+const thankYouDialog = document.getElementById("thankYouDialog");
+const closeThankYouButton = document.getElementById("closeThankYouDialog");
+
+closeThankYouButton.addEventListener("click", () => {
+  thankYouDialog.close();
+});
 
 function toggleTipUI() {
   const connection = dAppKit.stores.$connection.get();
-  const connected = connection && 
-    connection.isConnected && connection.wallet && connection.account;
+  const connected =
+    connection &&
+    connection.isConnected &&
+    connection.wallet &&
+    connection.account;
 
   tipUI.style.display = connected ? "" : "none";
 }
@@ -143,7 +152,10 @@ async function sendToken(senderAddress, token, amountRaw) {
       `Transaction failed: ${result.FailedTransaction.status.error?.message}`
     );
   }
+
   console.log("Transaction digest:", result.Transaction.digest);
+
+  thankYouDialog.showModal();
 }
 
 function submitTip() {
