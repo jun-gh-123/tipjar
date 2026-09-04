@@ -3,7 +3,7 @@
     <title>Sui Tip Jar</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css"
     />
     <style>
       body {
@@ -13,7 +13,7 @@
       }
 
       #tipUI {
-        display: flex;
+        display: none;
         flex-direction: column;
       }
 
@@ -23,10 +23,12 @@
       }
 
       #submitTip {
+        color: white;
         margin-top: 20px;
         background: #298dff;
         align-self: center;
         border-radius: 20px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
       }
 
       #thankYouDialogContent {
@@ -42,8 +44,11 @@
   </head>
   <body>
     <h1>Sui Tip Jar</h1>
-    <mysten-dapp-kit-connect-button></mysten-dapp-kit-connect-button>
-    <div id="tipUI" hidden>
+    <div id="connectButtonContainer" hidden>
+      <mysten-dapp-kit-connect-button></mysten-dapp-kit-connect-button>
+    </div>
+    <progress id="walletConnectProgress"></progress>
+    <div id="tipUI">
       <div class="amount">
         <h3>Amount</h3>
         <div id="tipAmounts"></div>

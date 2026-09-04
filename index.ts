@@ -15,6 +15,10 @@ const dAppKit = createDAppKit({
   },
 });
 
+const connectButtonContainer = document.getElementById(
+  "connectButtonContainer"
+);
+const walletConnectProgress = document.getElementById("walletConnectProgress");
 const button = document.querySelector("mysten-dapp-kit-connect-button");
 button.instance = dAppKit;
 
@@ -37,7 +41,7 @@ function toggleTipUI() {
     connection.wallet &&
     connection.account;
 
-  tipUI.style.display = connected ? "" : "none";
+  tipUI.style.display = connected ? "flex" : "none";
 }
 
 function addTipAmounts(amounts) {
@@ -185,8 +189,23 @@ function submitTip() {
   sendToken(senderAddress, token, tipAmountRaw);
 }
 
+let autoConnect = true;
+let debounceTimer = null;
 const unsubscribe = dAppKit.stores.$connection.subscribe((connection) => {
-  toggleTipUI();
+  clearTimeout(debounceTimer);
+
+  if (autoConnect) {
+    debounceTimer = setTimeout(() => {
+      if (["disconnected", "connected"].includes(connection.status)) {
+        connectButtonContainer.hidden = false;
+        walletConnectProgress.hidden = true;
+        toggleTipUI();
+        autoConnect = false;
+      }
+    }, 500);
+  } else {
+    toggleTipUI();
+  }
 });
 
 addTipAmounts([0.01, 0.05, 0.1, 0.25, 1, 5]);
