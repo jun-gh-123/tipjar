@@ -11,7 +11,8 @@
   "type": "commonjs",
   "main": "index.ts",
   "scripts": {
-    "start": "esbuild index.ts --outfile=www/app.js --allow-overwrite --minify --bundle --watch --servedir=www"
+    "start": "esbuild index.ts --outfile=www/app.js --allow-overwrite --minify --bundle --watch --servedir=www",
+    "build": "esbuild index.ts --outfile=www/app.js --allow-overwrite --minify --bundle"
   },
   "dependencies": {
     "@mysten/dapp-kit-core": "^1.6.22",
